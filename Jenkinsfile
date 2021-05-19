@@ -59,7 +59,7 @@ pipeline
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true, "Android")
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, "Android")
 				}
 			}
 		}
