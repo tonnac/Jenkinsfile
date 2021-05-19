@@ -31,6 +31,7 @@ pipeline
             )
 		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
 		string(defaultValue: 'ThirdPersonMap', description: 'Maps we want to cook', name: 'MapsToCook')
+		string(defaultValue: 'Temp', description: "Archive Foler", name: "ArchiveFolder")
 	}
     
 	environment 
@@ -72,7 +73,7 @@ pipeline
 			{
 				script
 				{
-					def arguments = "-fileopenlog ";
+					def arguments = "-fileopenlog -archive -archivedirectory=${params.ArchiveFolder}";
 					if(params.TargetPlatform as unreal.Platform == unreal.Platform.Android)
 					{
 						arguments += "-cookflavor=ETC2"
