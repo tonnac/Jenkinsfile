@@ -3,6 +3,7 @@
 def UE4 = new unreal.UE4()
 
 def BuildConfigChoices = UE4.GetBuildConfigurationChoices()
+def TargetPlatforms = UE4.GetTargetPlatformChoices()
 
 pipeline 
 {
@@ -23,6 +24,11 @@ pipeline
 			description: "Build Configuration",
 			name: "BuildConfig"
 			)
+        choice(
+            choices: TargetPlatforms,
+            description: "Target Platforms",
+            name: "Target Platform"
+            )
 		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
 		string(defaultValue: 'ThirdPersonMap', description: 'Maps we want to cook', name: 'MapsToCook')
 	}
