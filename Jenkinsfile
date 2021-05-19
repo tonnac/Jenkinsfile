@@ -78,7 +78,7 @@ pipeline
 						arguments += "-cookflavor=ETC2"
 					}
 					echo arguments
-					UE4.CookProject(params.TargetPlatform.name(), "${params.MapsToCook}", true, arguments)
+					UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, "${arguments}")
 				}
 			}
 		}
