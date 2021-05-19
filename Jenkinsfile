@@ -84,6 +84,16 @@ pipeline
 				}
 			}
 		}
+		stage("Package")
+		{
+			steps
+			{
+				script
+				{
+					UE4.PackageProject(params.TargetPlatform.name(), params.BuildConfig as unreal.BuildConfiguration, "${env.WORKSPACE}/${params.ArchiveFolder}")
+				}
+			}
+		}
 		stage('Build DDC') 
 		{
 			steps
