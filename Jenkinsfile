@@ -73,7 +73,7 @@ pipeline
 				script
 				{
 					def arguments = "11";
-					if(params.TargetPlatform as unreal.BuildConfiguration == unreal.Platform.Android)
+					if(params.TargetPlatform as unreal.Platform == unreal.Platform.Android)
 					{
 						arguments += "-cookflavor=ETC2"
 					}
