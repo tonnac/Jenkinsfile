@@ -72,13 +72,13 @@ pipeline
 			{
 				script
 				{
-					def arguments = "11";
+					def arguments = "-fileopenlog ";
 					if(params.TargetPlatform as unreal.Platform == unreal.Platform.Android)
 					{
 						arguments += "-cookflavor=ETC2"
 					}
 					echo arguments
-					UE4.CookProject("WindowsNoEditor", "${params.MapsToCook}")
+					UE4.CookProject(params.TargetPlatform.name(), "${params.MapsToCook}", true, arguments)
 				}
 			}
 		}
