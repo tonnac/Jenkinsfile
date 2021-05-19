@@ -1,8 +1,8 @@
 // @Library('UE4_Library@main')
+import unreal
 
-def UE4 = new unreal.UE4().with{
-	loadScriptByName('src/unreal/ue4.groovy')
-}
+
+def UE4 = new unreal.UE4()
 
 def BuildConfigChoices = UE4.GetBuildConfigurationChoices()
 
