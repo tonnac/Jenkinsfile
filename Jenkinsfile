@@ -1,5 +1,5 @@
 // @Library('UE4_Library@main')
-import unreal.UE4
+import com.company.unreal;
 
 
 def UE4 = new unreal.UE4()
