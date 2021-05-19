@@ -73,13 +73,14 @@ pipeline
 			{
 				script
 				{
-					def arguments = "-fileopenlog -archive -archivedirectory=${params.ArchiveFolder}";
+					def arguments = "-fileopenlog -archive -archivedirectory=${env.WORKSPACE}${params.ArchiveFolder}";
 					if(params.TargetPlatform as unreal.Platform == unreal.Platform.Android)
 					{
 						arguments += "-cookflavor=ETC2"
 					}
 					echo arguments
-					UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, env.WORKSPACE + "${arguments}")
+
+					// UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, env.WORKSPACE + "${arguments}")
 				}
 			}
 		}
