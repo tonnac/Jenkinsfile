@@ -80,7 +80,7 @@ pipeline
 					}
 					echo arguments
 
-					UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, env.WORKSPACE + "${arguments}")
+					UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, "${arguments}")
 				}
 			}
 		}
