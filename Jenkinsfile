@@ -1,8 +1,8 @@
 // @Library('UE4_Library@main')
-import com.company.UE4;
+import unreal;
 
 
-def UE4 = new com.company.UE4()
+def UE4 = new unreal.UE4()
 
 def BuildConfigChoices = UE4.GetBuildConfigurationChoices()
 

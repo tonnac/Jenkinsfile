@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-package com.company.UE4;
+package unreal;
 
 enum BuildConfiguration
 {
