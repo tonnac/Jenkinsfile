@@ -27,7 +27,7 @@ pipeline
         choice(
             choices: TargetPlatforms,
             description: "Target Platforms",
-            name: "Target Platform"
+            name: "TargetPlatform"
             )
 		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
 		string(defaultValue: 'ThirdPersonMap', description: 'Maps we want to cook', name: 'MapsToCook')
@@ -72,6 +72,12 @@ pipeline
 			{
 				script
 				{
+					def arguments = "";
+					if(params.TargetPlatform == "Android")
+					{
+						arguments += "-cookflavor=ETC2"
+					}
+					echo arguments
 					UE4.CookProject("WindowsNoEditor", "${params.MapsToCook}")
 				}
 			}
