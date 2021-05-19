@@ -90,7 +90,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject(params.TargetPlatform.name(), params.BuildConfig as unreal.BuildConfiguration, "${env.WORKSPACE}/${params.ArchiveFolder}")
+					UE4.PackageProject("${params.TargetPlatform}", params.BuildConfig as unreal.BuildConfiguration, "${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
 		}
