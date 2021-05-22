@@ -56,16 +56,16 @@ pipeline
 				}
 			}
 		}
-		// stage('Editor Compile')
-		// {
-		// 	steps
-		// 	{
-		// 		script
-		// 		{
-		// 			UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true, "Win64", "-log=${env.WORKSPACE}/Logs/${StartTime}EditorCompileLog.txt")
-		// 		}
-		// 	}
-		// }
+		stage('Editor Compile')
+		{
+			steps
+			{
+				script
+				{
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true, "Win64", "-log=${env.WORKSPACE}/Logs/${StartTime}EditorCompileLog.txt")
+				}
+			}
+		}
 		stage('Android Project Compile')
 		{
 			steps
