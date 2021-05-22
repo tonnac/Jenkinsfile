@@ -97,7 +97,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("Android -cookflavor=Multi", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+					UE4.PackageProject("Android -cookflavor=Multi", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/")
 				}
 			}
 		}
@@ -132,7 +132,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${StartTime}")
+					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/")
 				}
 			}
 		}
