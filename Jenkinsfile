@@ -53,13 +53,23 @@ pipeline
 				}
 			}
 		}
-		stage('Compile')
+		stage('Editor Compile')
 		{
 			steps
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, "Android")
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true)
+				}
+			}
+		}
+		stage('Project Compile')
+		{
+			steps
+			{
+				script
+				{
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform)
 				}
 			}
 		}
@@ -73,14 +83,13 @@ pipeline
 			{
 				script
 				{
-					def arguments = "-fileopenlog -archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}";
-					if(params.TargetPlatform as unreal.Platform == unreal.Platform.Android)
+					String platform = "${params.TargetPlatform}"
+					if(params.TargetPlatform == "Android")
 					{
-						arguments += " -cookflavor=ETC2"
+						platform = "Android_Multi"
 					}
-					echo arguments
-
-					UE4.CookProject("${params.TargetPlatform}", "${params.MapsToCook}", true, "${arguments}")
+					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
+					UE4.CookProject(platform, "", false, arguments)
 				}
 			}
 		}
@@ -90,7 +99,12 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("${params.TargetPlatform}", params.BuildConfig as unreal.BuildConfiguration, "", true, true, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+					String platform = "${params.TargetPlatform}"
+					if(params.TargetPlatform == "Android")
+					{
+						platform = "Android_Multi -cookflavor=Multi"
+					}
+					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
 		}
@@ -100,7 +114,7 @@ pipeline
 			{
 				script
 				{
-					UE4.BuildDDC()
+					// UE4.BuildDDC()
 				}
 			}
 		}
