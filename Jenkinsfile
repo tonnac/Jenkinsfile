@@ -50,69 +50,69 @@ pipeline
 				script
 				{
 					bat("del.bat") 
-					UE4.GenerateProjectFiles()
+					bat("run.bat")
 				}
 			}
 		}
-		stage('Editor Compile')
-		{
-			steps
-			{
-				script
-				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true)
-				}
-			}
-		}
-		stage('Project Compile')
-		{
-			steps
-			{
-				script
-				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform)
-				}
-			}
-		}
-		stage('Cook')
-		{
-			when
-			{
-				expression { params.CookProject == true }
-			}
-			steps
-			{
-				script
-				{
-					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android_Multi"
-					}
-					else if (params.TargetPlatform == "Win64")
-					{
-						platform = "WindowsNoEditor"
-					}
-					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
-					UE4.CookProject(platform, "", false, arguments)
-				}
-			}
-		}
-		stage("Package")
-		{
-			steps
-			{
-				script
-				{
-					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android_Multi -cookflavor=Multi"
-					}
-					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
-				}
-			}
-		}
+		// stage('Editor Compile')
+		// {
+		// 	steps
+		// 	{
+		// 		script
+		// 		{
+		// 			UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true)
+		// 		}
+		// 	}
+		// }
+		// stage('Project Compile')
+		// {
+		// 	steps
+		// 	{
+		// 		script
+		// 		{
+		// 			UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform)
+		// 		}
+		// 	}
+		// }
+		// stage('Cook')
+		// {
+		// 	when
+		// 	{
+		// 		expression { params.CookProject == true }
+		// 	}
+		// 	steps
+		// 	{
+		// 		script
+		// 		{
+		// 			String platform = "${params.TargetPlatform}"
+		// 			if(params.TargetPlatform == "Android")
+		// 			{
+		// 				platform = "Android_Multi"
+		// 			}
+		// 			else if (params.TargetPlatform == "Win64")
+		// 			{
+		// 				platform = "WindowsNoEditor"
+		// 			}
+		// 			String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
+		// 			UE4.CookProject(platform, "", false, arguments)
+		// 		}
+		// 	}
+		// }
+		// stage("Package")
+		// {
+		// 	steps
+		// 	{
+		// 		script
+		// 		{
+		// 			String platform = "${params.TargetPlatform}"
+		// 			if(params.TargetPlatform == "Android")
+		// 			{
+		// 				platform = "Android_Multi -cookflavor=Multi"
+		// 			}
+		// 			UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+		// 		}
+		// 	}
+		// }
 		// stage('Build DDC') 
 		// {
 		// 	steps
