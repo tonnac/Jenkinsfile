@@ -7,6 +7,7 @@ def TargetPlatforms = UE4.GetTargetPlatformChoices()
 
 pipeline 
 {
+	def StartTime = ""
 	agent {
         node {
             label 'master'
@@ -50,7 +51,7 @@ pipeline
 				{
 					bat("del.bat") 
 					def now = new Date()
-					println now.format("MMdd")
+					StartTime = now.format("MMddHHmm")
 					UE4.GenerateProjectFiles()
 				}
 			}
@@ -131,7 +132,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${StartTime}")
 				}
 			}
 		}
