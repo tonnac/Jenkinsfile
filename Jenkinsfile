@@ -88,6 +88,10 @@ pipeline
 					{
 						platform = "Android_Multi"
 					}
+					else if (params.TargetPlatform == "Win64")
+					{
+						platform = "WindowsNoEditor"
+					}
 					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
 					UE4.CookProject(platform, "", false, arguments)
 				}
