@@ -106,7 +106,7 @@ pipeline
 					String platform = "${params.TargetPlatform}"
 					if(params.TargetPlatform == "Android")
 					{
-						platform = "Android_Multi -cookflavor=Multi"
+						platform = "Android -cookflavor=Multi"
 					}
 					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
