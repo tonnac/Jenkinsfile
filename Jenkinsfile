@@ -72,7 +72,7 @@ pipeline
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform, "-log=${env.WORKSPACE}/Logs/${StartTime}AndroidProjectCompileLog.txt")
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, "Android", "-log=${env.WORKSPACE}/Logs/${StartTime}AndroidProjectCompileLog.txt")
 				}
 			}
 		}
