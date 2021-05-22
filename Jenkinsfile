@@ -1,4 +1,4 @@
-@Library('UE4_Library@main')
+@Library('UE4_Library@master')
 
 def UE4 = new unreal.UE4()
 
