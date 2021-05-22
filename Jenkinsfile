@@ -30,14 +30,15 @@ pipeline
             name: "TargetPlatform"
             )
 		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
-		string(defaultValue: 'Temp', description: "Archive Foler", name: "ArchiveFolder")
+		string(defaultValue: 'Temp', description: "Archive Folder", name: "ArchiveFolder")
+		string(defaultValue: "", description: "Project Folder", name: "ProjectFolder")
 	}
     
 	environment 
 	{
 		ProjectName		= getFolderName(this)
 		
-		UE4 = UE4.Initialise(ProjectName, env.ENGINE_ROOT, env.WORKSPACE)
+		UE4 = UE4.Initialise(ProjectName, env.ENGINE_ROOT, params.ProjectFolder)
 	}
 	
 	stages
