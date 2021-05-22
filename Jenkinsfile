@@ -1,6 +1,4 @@
 @Library('UE4_Library@main')
-import java.time.*
-
 
 def UE4 = new unreal.UE4()
 
@@ -51,8 +49,8 @@ pipeline
 				script
 				{
 					bat("del.bat") 
-					def now = LocalDateTime.now()
-					println now
+					def now = new Date()
+					println now.format("MMdd")
 					UE4.GenerateProjectFiles()
 				}
 			}
