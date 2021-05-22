@@ -112,6 +112,16 @@ pipeline
 				}
 			}
 		}
+		stage('Window Project Compile')
+		{
+			steps
+			{
+				script
+				{
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false)
+				}
+			}
+		}
 		stage('Windows Cook')
 		{
 			when
