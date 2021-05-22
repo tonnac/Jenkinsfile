@@ -10,6 +10,7 @@ pipeline
 	agent {
         node {
             label 'master'
+            customWorkspace 'C:/Users/C/source/repos/SpawnSpawn'
         }
     }
     
@@ -28,16 +29,15 @@ pipeline
             description: "Target Platforms",
             name: "TargetPlatform"
             )
-		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
+		// booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
 		string(defaultValue: 'Temp', description: "Archive Folder", name: "ArchiveFolder")
-		string(defaultValue: "", description: "Project Folder", name: "ProjectFolder")
 	}
     
 	environment 
 	{
 		ProjectName		= getFolderName(this)
 		
-		UE4 = UE4.Initialise(ProjectName, env.ENGINE_ROOT, params.ProjectFolder)
+		UE4 = UE4.Initialise(ProjectName, env.ENGINE_ROOT, env.WORKSPACE)
 	}
 	
 	stages
@@ -75,10 +75,10 @@ pipeline
 		}
 		stage('Android Cook')
 		{
-			when
-			{
-				expression { params.CookProject == true }
-			}
+			// when
+			// {
+			// 	expression { params.CookProject == true }
+			// }
 			steps
 			{
 				script
@@ -110,10 +110,10 @@ pipeline
 		}
 		stage('Windows Cook')
 		{
-			when
-			{
-				expression { params.CookProject == true }
-			}
+			// when
+			// {
+			// 	expression { params.CookProject == true }
+			// }
 			steps
 			{
 				script
