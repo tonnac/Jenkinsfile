@@ -51,7 +51,7 @@ pipeline
 				{
 					bat("del.bat") 
 					def now = new Date()
-					StartTime = now.format("MM.dd_HH:mm")
+					StartTime = now.format("MM-dd_HH:mm")
 					UE4.GenerateProjectFiles()
 				}
 			}
