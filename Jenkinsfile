@@ -132,7 +132,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${params.StartTime}")
+					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${StartTime}")
 				}
 			}
 		}
