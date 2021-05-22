@@ -7,7 +7,6 @@ def TargetPlatforms = UE4.GetTargetPlatformChoices()
 
 pipeline 
 {
-	def StartTime = ""
 	agent {
         node {
             label 'master'
@@ -37,6 +36,7 @@ pipeline
 	environment 
 	{
 		ProjectName		= getFolderName(this)
+		StartTime = ""
 		
 		UE4 = UE4.Initialise(ProjectName, env.ENGINE_ROOT, env.WORKSPACE)
 	}
@@ -51,7 +51,7 @@ pipeline
 				{
 					bat("del.bat") 
 					def now = new Date()
-					StartTime = now.format("MMddHHmm")
+					params.StartTime = now.format("MMddHHmm")
 					UE4.GenerateProjectFiles()
 				}
 			}
@@ -62,7 +62,7 @@ pipeline
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true)
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, true, "Win64", "-log=${env.WORKSPACE}/Logs/${env.StartTime}EditorCompileLog.txt")
 				}
 			}
 		}
@@ -72,7 +72,7 @@ pipeline
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform)
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, params.TargetPlatform, "-log=${env.WORKSPACE}/Logs/${env.StartTime}AndroidProjectCompileLog.txt")
 				}
 			}
 		}
@@ -86,7 +86,7 @@ pipeline
 			{
 				script
 				{
-					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
+					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs/${env.StartTime}AndroidCook.txt -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
 					UE4.CookProject("Android_Multi", "", false, arguments)
 				}
 			}
@@ -107,7 +107,7 @@ pipeline
 			{
 				script
 				{
-					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false)
+					UE4.CompileProject(params.BuildConfig as unreal.BuildConfiguration, false, "Win64", "-log=${env.WORKSPACE}/Logs/${env.StartTime}WindowProjectCompileLog.txt")
 				}
 			}
 		}
@@ -121,7 +121,7 @@ pipeline
 			{
 				script
 				{
-					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
+					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs/${env.StartTime}WindowCookLog.txt -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
 					UE4.CookProject("WindowsNoEditor", "", false, arguments)
 				}
 			}
@@ -132,7 +132,7 @@ pipeline
 			{
 				script
 				{
-					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${StartTime}")
+					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}/${params.StartTime}")
 				}
 			}
 		}
