@@ -30,7 +30,6 @@ pipeline
             name: "TargetPlatform"
             )
 		booleanParam(defaultValue: true, description: 'Should the project be cooked?', name: 'CookProject')
-		string(defaultValue: 'ThirdPersonMap', description: 'Maps we want to cook', name: 'MapsToCook')
 		string(defaultValue: 'Temp', description: "Archive Foler", name: "ArchiveFolder")
 	}
     
@@ -109,6 +108,35 @@ pipeline
 					{
 						platform = "Android_Multi -cookflavor=Multi"
 					}
+					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+				}
+			}
+		}
+		stage('Windows Cook')
+		{
+			when
+			{
+				expression { params.CookProject == true }
+			}
+			steps
+			{
+				script
+				{
+					String platform = "${params.TargetPlatform}"
+					platform = "WindowsNoEditor"
+					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
+					UE4.CookProject(platform, "", false, arguments)
+				}
+			}
+		}
+		stage("Windows Package")
+		{
+			steps
+			{
+				script
+				{
+					String platform = "${params.TargetPlatform}"
+					platform = "Android_Multi -cookflavor=Multi"
 					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
