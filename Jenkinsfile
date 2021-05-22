@@ -10,7 +10,6 @@ pipeline
 	agent {
         node {
             label 'master'
-            customWorkspace 'C:/Users/C/source/repos/SpawnSpawn'
         }
     }
     
