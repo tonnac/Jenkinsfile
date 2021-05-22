@@ -1,4 +1,5 @@
 @Library('UE4_Library@main')
+import static java.util.Calendar.*
 
 def UE4 = new unreal.UE4()
 
@@ -48,6 +49,8 @@ pipeline
 			{
 				script
 				{
+					def formattedDate = date.format("dd/MM/yyy")
+        			println formattedDate // 18/05/1988
 					bat("del.bat") 
 					UE4.GenerateProjectFiles()
 				}
