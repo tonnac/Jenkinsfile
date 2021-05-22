@@ -63,7 +63,7 @@ pipeline
 				}
 			}
 		}
-		stage('Project Compile')
+		stage('Android Project Compile')
 		{
 			steps
 			{
@@ -73,7 +73,7 @@ pipeline
 				}
 			}
 		}
-		stage('Cook')
+		stage('Android Cook')
 		{
 			when
 			{
@@ -83,32 +83,18 @@ pipeline
 			{
 				script
 				{
-					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android_Multi"
-					}
-					else if (params.TargetPlatform == "Win64")
-					{
-						platform = "WindowsNoEditor"
-					}
 					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
-					UE4.CookProject(platform, "", false, arguments)
+					UE4.CookProject("Android_Multi", "", false, arguments)
 				}
 			}
 		}
-		stage("Package")
+		stage("Android Package")
 		{
 			steps
 			{
 				script
 				{
-					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android -cookflavor=Multi"
-					}
-					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+					UE4.PackageProject("Android -cookflavor=Multi", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
 		}
@@ -132,10 +118,8 @@ pipeline
 			{
 				script
 				{
-					String platform = "${params.TargetPlatform}"
-					platform = "WindowsNoEditor"
 					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
-					UE4.CookProject(platform, "", false, arguments)
+					UE4.CookProject("WindowsNoEditor", "", false, arguments)
 				}
 			}
 		}
@@ -145,9 +129,7 @@ pipeline
 			{
 				script
 				{
-					String platform = "${params.TargetPlatform}"
-					platform = "Win64"
-					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
+					UE4.PackageProject("Win64", params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
 		}
