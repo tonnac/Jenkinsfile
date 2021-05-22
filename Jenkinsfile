@@ -49,7 +49,7 @@ pipeline
 			{
 				script
 				{
-					bat(del.bat) 
+					bat("del.bat") 
 					UE4.GenerateProjectFiles()
 				}
 			}
