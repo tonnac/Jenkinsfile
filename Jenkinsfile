@@ -84,10 +84,10 @@ pipeline
 				script
 				{
 					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android_Multi"
-					}
+					// if(params.TargetPlatform == "Android")
+					// {
+					// 	platform = "Android_Multi"
+					// }
 					String arguments = "-fileopenlog -ddc=InstalledDerivedDataBackendGraph -unversioned -abslog=${env.WORKSPACE}/Logs -stdout -CrashForUAT -unattended -NoLogTimes  -UTF8Output"
 					UE4.CookProject(platform, "", false, arguments)
 				}
@@ -100,10 +100,10 @@ pipeline
 				script
 				{
 					String platform = "${params.TargetPlatform}"
-					if(params.TargetPlatform == "Android")
-					{
-						platform = "Android_Multi -cookflavor=Multi"
-					}
+					// if(params.TargetPlatform == "Android")
+					// {
+					// 	platform = "Android_Multi -cookflavor=Multi"
+					// }
 					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
