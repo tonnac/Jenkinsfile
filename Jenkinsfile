@@ -136,7 +136,7 @@ pipeline
 				script
 				{
 					String platform = "${params.TargetPlatform}"
-					platform = "Android_Multi -cookflavor=Multi"
+					platform = "Win64"
 					UE4.PackageProject(platform, params.BuildConfig as unreal.BuildConfiguration, "", true, false, "", "-archive -archivedirectory=${env.WORKSPACE}/${params.ArchiveFolder}")
 				}
 			}
